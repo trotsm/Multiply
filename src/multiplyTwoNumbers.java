@@ -1,0 +1,114 @@
+/**
+ * class that multiply the integers, that have 2 digits e.g. 45*14
+ */
+public class multiplyTwoNumbers {
+    // multipliedNumber is sum of two digits
+    // if we have 42 and 56, it is 6*2, 6*4, 5*2, 5*4
+    int multipliedNumber = 0;
+
+    /**
+     * create and print first line of the result
+     *
+     * @param array1   integer array of first input parameters
+     * @param array2   integer array of second input parameters
+     * @param digitOne array for first divided numbers, e.g. [25,34] from input - [5,4] in digitOne[]
+     * @param digitTwo array for second divided numbers, e.g. [25,34] from input - [2,3] in digitTwo[]
+     */
+    void firstLine(int[] array1, int[] array2, int[] digitOne, int[] digitTwo) {
+        int[] firstLine = new int[array1.length]; // create array that show integers in first line of multiplication
+        // we have to divide multipliedNumber to separate digits
+        // because if we have 6*2 as a result we have 12, we need to write down 2 and then add 1 to next digit
+        for (int i = array1.length - 1; i >= 0; i--) {
+            multipliedNumber = array2[1] * array1[i]; // multiply last int from array2([1]) to all digits in array1
+            digitOne[i] = multipliedNumber % 10; // divide integer for 2 digits, e.g. from 12 we have 2
+            multipliedNumber /= 10;
+            digitTwo[i] = multipliedNumber % 10;
+
+            if (i == 0) { // array to show first line
+                firstLine[0] = digitOne[0] + digitTwo[1]; // show the first digit
+                String nFirst = String.valueOf(digitTwo[0] + "" + firstLine[0]);
+                firstLine[0] = Integer.parseInt(nFirst);//if nFirst is higher than 9, show that 5*62345 is 311725, not 11725
+                if (firstLine[0] > 99) { //if nFirst by adding is e.g. 310(3+10) digitTwo[0]=3 firstLine[0] = 10
+                    firstLine[0] = digitTwo[1] + digitOne[0];
+                    int secondN = firstLine[0] % 10;
+                    firstLine[0] /= 10;
+                    int firstN = firstLine[0] % 10;
+                    firstLine[0] = digitTwo[0] + firstN;
+                    String nSecond = String.valueOf(firstLine[0] + "" + secondN);
+                    firstLine[0] = Integer.parseInt(nSecond); //digit will be e.g. 411 instead of 3111
+                }
+            } else if (i == 1) {
+                firstLine[1] = digitOne[1]; // show the last digit
+            }
+        }
+        System.out.print("            ");
+        // check if item in secondLine is higher than 9
+        // if yes, divide this item to 2 digits
+        //if it is 13 - 3 show, and 1 add to next integer
+        for (int l = firstLine.length - 1; l >= 0; l--) {
+            // and check if first number is not higher than 9 (we need to show entire first number (5*62345 is 311725, not 11725)
+            if (firstLine[l] > 9 && l != 0) {
+                int firstNumber = firstLine[l] % 10; //get the second digit(from 12 it is 2)
+                firstLine[l] /= 10;
+                int secondNumber = firstLine[l] % 10; // get the first digit(from 12 it is 1)
+                firstLine[l] = firstNumber; // instead 12 show only 2
+                firstLine[l - 1] = firstLine[l - 1] + secondNumber; // add 1 (from 12) to next item in the array
+            }
+        }
+        for (int line = 0; line < firstLine.length; line++)
+            System.out.print(firstLine[line]); //print first line in right order
+        System.out.println();
+    }
+
+    /**
+     * create and print second line of the result
+     *
+     * @param array1   integer array of first input parameters
+     * @param array2   integer array of second input parameters
+     * @param digitOne array for first divided numbers, e.g. [25,34] from input - [5,4] in digitOne[]
+     * @param digitTwo array for second divided numbers, e.g. [25,34] from input - [2,3] in digitTwo[]
+     */
+    void secondLine(int[] array1, int[] array2, int[] digitOne, int[] digitTwo) {
+        int[] secondLine = new int[array1.length]; // create array that show integers in second line of multiplication
+        for (int i = array1.length - 1; i >= 0; i--) {
+            multipliedNumber = array2[0] * array1[i]; // multiply last int from array2([0]) to all digits in array1
+            digitOne[i] = multipliedNumber % 10; // divide integer for 2 digits, e.g. from 12 we have 2
+            multipliedNumber /= 10;
+            digitTwo[i] = multipliedNumber % 10;
+
+            if (i == 0) {  // array to show second line
+                secondLine[0] = digitOne[0] + digitTwo[1]; // show the first digit
+                String nFirst = String.valueOf(digitTwo[0] + "" + secondLine[0]);
+                secondLine[0] = Integer.parseInt(nFirst);//if nFirst is higher than 9, show that 5*62345 is 311725, not 11725
+                if (secondLine[0] > 99) { //if nFirst by adding is e.g. 310(3+10) digitTwo[0]=3 firstLine[0] = 10
+                    secondLine[0] = digitTwo[1] + digitOne[0];
+                    int secondN = secondLine[0] % 10;
+                    secondLine[0] /= 10;
+                    int firstN = secondLine[0] % 10;
+                    secondLine[0] = digitTwo[0] + firstN;
+                    String nSecond = String.valueOf(secondLine[0] + "" + secondN);
+                    secondLine[0] = Integer.parseInt(nSecond); //digit will be e.g. 411 instead of 3111
+                }
+            } else if (i == 1) {
+                secondLine[1] = digitOne[1]; // show the last digit
+            }
+        }
+        System.out.print("           ");
+        // check if item in thirdLine is higher than 9
+        // if yes, divide this item to 2 digits
+        //if it is 13 - 3 show, and 1 add to next integer
+        for (int l = secondLine.length - 1; l >= 0; l--) {
+            // and check if first number is not higher than 9 (we need to show entire first number)
+            if (secondLine[l] > 9 && l != 0) {
+                int firstNumber = secondLine[l] % 10; //get the second digit(from 12 it is 2)
+                secondLine[l] /= 10;
+                int secondNumber = secondLine[l] % 10; // get the first digit(from 12 it is 1)
+                secondLine[l] = firstNumber; // instead 12 show only 2
+                secondLine[l - 1] = secondLine[l - 1] + secondNumber; // add 1 (from 12) to next item in the array
+            }
+        }
+        for (int line = 0; line < secondLine.length; line++)
+            System.out.print(secondLine[line]); //print second line in right order
+        System.out.println();
+    }
+}
